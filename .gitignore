@@ -1,4 +1,5 @@
 *.key
+*.log
 *.crt
 pki/
 vault.yml
