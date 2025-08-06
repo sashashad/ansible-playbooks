@@ -1,0 +1,10 @@
+*.key
+*.crt
+pki/
+vault.yml
+join-command
+join-control-command
+admin.conf
+join-command
+join-control-command
+admin.conf

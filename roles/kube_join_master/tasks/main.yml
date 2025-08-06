@@ -1,0 +1,19 @@
+- name: Copy control-plane certs
+  copy:
+    src: ./pki/
+    dest: /etc/kubernetes/pki/
+
+- name: Copy etcd certs
+  copy:
+    src: ./pki/etcd/
+    dest: /etc/kubernetes/pki/etcd/
+
+- name: Transfer control-plane join script
+  copy:
+    src: join-control-command
+    dest: /tmp/join-control-command.sh
+    mode: '0777'
+
+- name: Join to cluster as control-plane
+  command: sh /tmp/join-control-command.sh
+

@@ -1,0 +1,36 @@
+# site.yml — основной сценарий развертывания кластера Kubernetes с управляющими и рабочими нодами
+
+- hosts: Kuber_control, Kuber_working
+  become: true
+  # переменные вынесены в group_vars/all.yml
+  roles:
+    - containerd
+    - k8s_prereqs
+    - reboot
+    - kubernetes_packages
+
+- hosts: kuber_master_node_1
+  # переменные вынесены в host_vars/kuber_master_node_1.yml
+  become: true
+  roles:
+    - keepalived
+    - kubeadm_init
+    - admin_conf
+    - certs
+    - join_commands
+
+- hosts: kuber_master_node_2
+  become: true
+  # переменные вынесены в host_vars/kuber_master_node_2.yml
+  roles:
+    - keepalived
+    - kube_join_master
+    - admin_conf
+
+- hosts: Kuber_working
+  become: true
+  # group_vars/Kuber_working.yml
+  roles:
+    - keepalived
+    - kube_join_worker
+

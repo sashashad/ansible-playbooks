@@ -1,0 +1,31 @@
+- name: Create local cert directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  delegate_to: localhost
+  with_items:
+    - ./pki/
+    - ./pki/etcd
+
+- name: Fetch control-plane certs
+  fetch:
+    src: /etc/kubernetes/pki/{{ item }}
+    dest: ./pki/
+    flat: yes
+  with_items:
+    - ca.crt
+    - ca.key
+    - front-proxy-ca.crt
+    - front-proxy-ca.key
+    - sa.key
+    - sa.pub
+
+- name: Fetch etcd certs
+  fetch:
+    src: /etc/kubernetes/pki/etcd/{{ item }}
+    dest: ./pki/etcd/
+    flat: yes
+  with_items:
+    - ca.key
+    - ca.crt
+

@@ -1,0 +1,12 @@
+# keepaliverd configuration:
+keepalived_interface: eth0
+keepalived_vrid: 150
+keepalived_auth_pass: StrongVRRPpass
+keepalived_virtual_ip: 172.16.1.150
+keepalived_state: BACKUP
+keepalived_priority: 100
+
+# kubeadm_init:
+pod_subnet: "10.32.0.0/12"
+control_plane_ip_1: "172.16.1.152"
+control_plane_ip_2: "172.16.1.153"
