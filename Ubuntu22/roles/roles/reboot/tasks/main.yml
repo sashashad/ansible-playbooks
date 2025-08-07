@@ -1,0 +1,19 @@
+- name: Reboot server
+  shell: sleep 2 && reboot
+  async: 1
+  poll: 0
+  failed_when: false
+
+- name: Wait for server to initiate shutdown
+  wait_for:
+    host: "{{ ansible_ssh_host }}"
+    state: stopped
+    port: 22
+  delegate_to: localhost
+
+- name: Wait for server to come back online
+  wait_for:
+    host: "{{ ansible_ssh_host }}"
+    state: started
+    port: 22
+  delegate_to: localhost

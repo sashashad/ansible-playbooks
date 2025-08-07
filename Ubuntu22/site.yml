@@ -15,9 +15,9 @@
   roles:
     - keepalived
     - kubeadm_init
-    - admin_conf
     - certs
     - join_commands
+    - kube_conf
 
 - hosts: kuber_master_node_2
   become: true
@@ -25,7 +25,7 @@
   roles:
     - keepalived
     - kube_join_master
-    - admin_conf
+    - kube_conf
 
 - hosts: Kuber_working
   become: true

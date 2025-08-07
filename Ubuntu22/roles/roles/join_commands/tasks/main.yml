@@ -1,0 +1,13 @@
+- name: Generate join control command
+  command: "sh -c 'echo $(kubeadm token create --print-join-command) --control-plane'"
+  register: join_command
+
+- name: Save control-plane join command
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-control-command"
+
+- name: Generate worker join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+
+- name: Save worker join command
+  local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
