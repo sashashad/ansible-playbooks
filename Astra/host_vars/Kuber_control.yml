@@ -1,0 +1,17 @@
+# group_vars/Kuber_control.yml
+keepalived_instance_name: VI_61
+keepalived_interface: eth0
+keepalived_vrid: 61
+keepalived_auth_pass: "change_me_strong"
+keepalived_vip: 172.16.1.150
+
+k8s_version: "stable"
+k8s_pod_subnet: 10.32.0.0/12
+k8s_advertise_address: 172.16.1.131
+k8s_cp_endpoint: 172.16.1.150:6443
+k8s_cert_sans:
+  - 127.0.0.1
+  - 172.16.1.131
+  - 172.16.1.132
+  - 172.16.1.133
+kubelet_cgroup_driver: systemd

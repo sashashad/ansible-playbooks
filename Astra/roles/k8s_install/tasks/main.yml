@@ -1,0 +1,29 @@
+# Role: k8s_install/tasks/main.yml
+- name: Install Kubernetes packages
+  apt:
+    name:
+      - "kubernetes-admin={{ k8s_version }}"
+      - "kubernetes-client={{ k8s_version }}"
+      - "kubernetes-master={{ k8s_version }}"
+      - "kubernetes-node={{ k8s_version }}"
+    update_cache: yes
+  tags: [k8s_install]
+
+- name: Hold Kubernetes packages
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubernetes-admin
+    - kubernetes-client
+    - kubernetes-master
+    - kubernetes-node
+  tags: [k8s_install]
+
+- name: Restart kubelet
+  service:
+    name: kubelet
+    state: restarted
+    enabled: yes
+  when: ansible_service_mgr == 'systemd'
+  tags: [k8s_install]

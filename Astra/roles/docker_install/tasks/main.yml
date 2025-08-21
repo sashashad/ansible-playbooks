@@ -1,0 +1,7 @@
+# Role: docker_install/tasks/main.yml
+- name: Install docker
+  apt:
+    name: docker.io
+    update_cache: yes
+  notify: Restart docker
+  tags: [docker]

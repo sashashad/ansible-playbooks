@@ -1,0 +1,36 @@
+# Role: cert_transfer/tasks/main.yml
+- name: Create local directories for certificates
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  loop:
+    - ./pki/
+    - ./pki/etcd
+  delegate_to: localhost
+  tags: [cert_transfer, cert_dirs]
+
+- name: Fetch control-plane certs
+  fetch:
+    src: /etc/kubernetes/pki/{{ item }}
+    dest: ./pki/
+    flat: yes
+  loop:
+    - ca.crt
+    - ca.key
+    - front-proxy-ca.crt
+    - front-proxy-ca.key
+    - sa.key
+    - sa.pub
+  tags: [cert_transfer, cert_cp]
+
+- name: Fetch etcd certs
+  fetch:
+    src: /etc/kubernetes/pki/etcd/{{ item }}
+    dest: ./pki/etcd/
+    flat: yes
+  loop:
+    - ca.key
+    - ca.crt
+  tags: [cert_transfer, cert_etcd]

@@ -1,0 +1,36 @@
+# Role: kubeadm_init/tasks/main.yml
+- name: Create kubeadm init config from template
+  template:
+    src: kubeadm-config.yaml.j2
+    dest: /opt/kubeadm-config.yaml
+  tags: [kubeadm_init, kubeadm_template]
+
+- name: Initialize the Kubernetes cluster using kubeadm
+  command: kubeadm init --config=/opt/kubeadm-config.yaml
+  ignore_errors: yes
+  tags: [kubeadm_init, kubeadm_init_run]
+
+- name: Ensure kube config directory exists
+  file:
+    path: "{{ kubeconfig_home }}/.kube"
+    state: directory
+    owner: "{{ kubeconfig_user }}"
+    group: "{{ kubeconfig_group }}"
+    mode: '0700'
+  tags: [kubeadm_init, kubeconfig_dir]
+
+- name: Copy admin kubeconfig to user
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: "{{ kubeconfig_home }}/.kube/config"
+    remote_src: yes
+    owner: "{{ kubeconfig_user }}"
+    group: "{{ kubeconfig_group }}"
+    mode: '0644'
+  tags: [kubeadm_init, kubeconfig_copy]
+
+- name: Apply Weave-Net
+  kubernetes.core.k8s:
+    state: present
+    src: https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+  tags: [kubeadm_init, weave_apply]

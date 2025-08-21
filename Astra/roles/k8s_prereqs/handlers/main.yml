@@ -1,0 +1,3 @@
+# Role: k8s_prereqs/handlers/main.yml
+- name: Reload sysctl
+  command: sysctl --system
