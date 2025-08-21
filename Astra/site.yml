@@ -2,8 +2,7 @@
   become: true
   roles:
     - prepare_apt_sources
-    - docker_install
-    - containerd_install
+    - prepare_hosts
     - k8s_prereqs
     - k8s_install
 

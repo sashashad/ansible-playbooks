@@ -1,3 +1,0 @@
-# roles/containerd_install/defaults/main.yml
-containerd_package: containerd
-containerd_systemd_cgroup: true
