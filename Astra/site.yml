@@ -1,20 +1,22 @@
 - hosts: all
+  remote_user: evil
   become: true
   roles:
-    - prepare_apt_sources
-    - prepare_hosts
-    - k8s_prereqs
-    - k8s_install
-
-- hosts: Kuber_control
-  become: true
-  roles:
-    - keepalived_config
-    - kubeadm_init
-    - cert_transfer
-    - generate_join_commands
-
-- hosts: Kuber_control
-  become: true
-  roles:
-    - kubeadm_join_master
+    - role: prepare_apt_sources
+      tags: [apt_sources]
+#   - prepare_hosts
+#    - k8s_prereqs
+#    - k8s_install
+#
+#- hosts: Kuber_control
+#  become: true
+#  roles:
+#    - keepalived_config
+#    - kubeadm_init
+#    - cert_transfer
+#    - generate_join_commands
+#
+#- hosts: Kuber_control
+#  become: true
+#  roles:
+#    - kubeadm_join_master

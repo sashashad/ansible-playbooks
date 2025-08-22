@@ -1,0 +1,3 @@
+- hosts: Kuber_control
+  roles:
+    - prepare_apt_sources
