@@ -3,6 +3,6 @@
 keepalived_vrid: 62                   # уникальный virtual_router_id для VRRP
 keepalived_interface: eth0           # имя сетевого интерфейса (например, eth0 или ens18)
 keepalived_auth_pass: workersecret   # уникальный пароль для аутентификации VRRP
-keepalived_virtual_ip: 172.16.1.140  # виртуальный IP для рабочих нод (не должен совпадать с control-plane IP)
+keepalived_virtual_ip: 172.16.1.141  # виртуальный IP для рабочих нод (не должен совпадать с control-plane IP)
 keepalived_state: BACKUP
 keepalived_priority: 100
