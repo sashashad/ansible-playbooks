@@ -1,0 +1,27 @@
+# roles/prepare_apt_sources/tasks/main.yml
+
+- name: Comment out any cdrom repo line
+  lineinfile:
+    path: /etc/apt/sources.list
+    regexp: '^(deb cdrom:.*)$'
+    line: '#\1'
+    backrefs: yes
+  tags: [apt_sources]
+
+- name: Uncomment repository-base line (if present)
+  lineinfile:
+    path: /etc/apt/sources.list
+    regexp: '^#(deb https://download\.astralinux\.ru/astra/stable/1\.7_x86-64/repository-base/.*)$'
+    line: '\1'
+    backrefs: yes
+  notify: Update apt cache
+  tags: [apt_sources]
+
+- name: Uncomment repository-extended line (if present)
+  lineinfile:
+    path: /etc/apt/sources.list
+    regexp: '^#(deb https://download\.astralinux\.ru/astra/stable/1\.7_x86-64/repository-extended/.*)$'
+    line: '\1'
+    backrefs: yes
+  notify: Update apt cache
+  tags: [apt_sources]

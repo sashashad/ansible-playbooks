@@ -1,6 +1,6 @@
-# Role: docker_install/handlers/main.yml
 - name: Restart docker
   service:
     name: docker
     state: restarted
     enabled: yes
+  tags: [docker_restart]
