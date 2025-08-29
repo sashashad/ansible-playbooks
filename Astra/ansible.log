@@ -1471,3 +1471,12 @@ The offending line appears to be:
 2025-08-29 14:11:02,824 p=646885 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
 2025-08-29 14:11:38,430 p=647064 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
 2025-08-29 14:11:40,776 p=647099 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:11:46,509 p=647144 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:12:33,683 p=647312 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:12:36,053 p=647339 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:12:39,922 p=647371 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:16:49,134 p=648686 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:16:49,179 p=648684 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:16:53,733 p=648753 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:18:07,665 p=649017 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
+2025-08-29 14:18:16,223 p=649083 u=evil n=ansiblelint | Guessed /home/evil/ansible-playbooks as project root directory
