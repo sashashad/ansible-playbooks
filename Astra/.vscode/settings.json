@@ -1,7 +1,0 @@
-{
-    "ansible.python.interpreterPath": "/usr/bin/python3",
-    "editor.defaultFormatter": "redhat.ansible",
-    "ansibleServer.trace.server": "messages",
-    "ansible.executionEnvironment.enabled": false,
-    "ansible.python.activationScript": ""
-}
