@@ -1,0 +1,6 @@
+# group_vars/Kuber_worker.yml
+keepalived_instance_name: VI_{{ keepalived_vrid }}
+keepalived_interface: eth0
+keepalived_vrid: 49
+keepalived_auth_pass: "change_me_strong"
+keepalived_vip: 172.16.51.49

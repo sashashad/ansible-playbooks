@@ -3,12 +3,13 @@
   template:
     src: kubeadm-config.yaml.j2
     dest: /opt/kubeadm-config.yaml
-  tags: [kubeadm_init, kubeadm_template]
+  tags: [kubeadm_init]
 
 - name: Initialize the Kubernetes cluster using kubeadm
-  command: kubeadm init --config=/opt/kubeadm-config.yaml
-  ignore_errors: yes
-  tags: [kubeadm_init, kubeadm_init_run]
+  command: kubeadm init --config=/opt/kubeadm-config.yaml --ignore-preflight-errors=NumCPU
+  register: kubeadm_init_result
+  failed_when: kubeadm_init_result.rc != 0
+  tags: [kubeadm_init]
 
 - name: Ensure kube config directory exists
   file:
@@ -17,7 +18,13 @@
     owner: "{{ kubeconfig_user }}"
     group: "{{ kubeconfig_group }}"
     mode: '0700'
-  tags: [kubeadm_init, kubeconfig_dir]
+  tags: [kubeadm_init]
+
+- name: Check admin.conf presence
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: admin_conf
+  tags: [kubeadm_init]
 
 - name: Copy admin kubeconfig to user
   copy:
@@ -27,10 +34,29 @@
     owner: "{{ kubeconfig_user }}"
     group: "{{ kubeconfig_group }}"
     mode: '0644'
-  tags: [kubeadm_init, kubeconfig_copy]
+  when: admin_conf.stat.exists
+  tags: [kubeadm_init]
+
+- name: Ensure Python3 and pip are installed
+  apt:
+    name:
+      - python3
+      - python3-pip
+    state: present
+    update_cache: yes
+  tags: [kubeadm_init]
+
+- name: Ensure Kubernetes Python client is installed
+  pip:
+    name: kubernetes
+    executable: /usr/bin/pip3
+  tags: [kubeadm_init]
 
 - name: Apply Weave-Net
+  when: admin_conf.stat.exists
   kubernetes.core.k8s:
     state: present
     src: https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
-  tags: [kubeadm_init, weave_apply]
+    kubeconfig: /etc/kubernetes/admin.conf
+  tags: [weave_net]
+  

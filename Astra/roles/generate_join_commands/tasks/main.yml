@@ -4,23 +4,23 @@
   args:
     executable: /bin/bash
   register: join_command_control
-  tags: [join_commands, join_cp_gen]
+  tags: [join_commands]
 
 - name: Save join control-plane command to file
   copy:
     content: "{{ join_command_control.stdout }}"
     dest: ./join-control-command
   delegate_to: localhost
-  tags: [join_commands, join_cp_save]
+  tags: [join_commands]
 
 - name: Generate join worker command
   command: kubeadm token create --print-join-command
   register: join_command_worker
-  tags: [join_commands, join_worker_gen]
+  tags: [join_commands]
 
 - name: Save join worker command to file
   copy:
     content: "{{ join_command_worker.stdout }}"
     dest: ./join-command
   delegate_to: localhost
-  tags: [join_commands, join_worker_save]
+  tags: [join_commands]

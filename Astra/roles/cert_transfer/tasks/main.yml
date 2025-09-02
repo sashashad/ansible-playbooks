@@ -9,7 +9,7 @@
     - ./pki/
     - ./pki/etcd
   delegate_to: localhost
-  tags: [cert_transfer, cert_dirs]
+  tags: [cert_transfer]
 
 - name: Fetch control-plane certs
   fetch:
@@ -23,7 +23,7 @@
     - front-proxy-ca.key
     - sa.key
     - sa.pub
-  tags: [cert_transfer, cert_cp]
+  tags: [cert_transfer]
 
 - name: Fetch etcd certs
   fetch:
@@ -33,4 +33,4 @@
   loop:
     - ca.key
     - ca.crt
-  tags: [cert_transfer, cert_etcd]
+  tags: [cert_transfer]

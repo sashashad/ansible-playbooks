@@ -1,0 +1,4 @@
+# Role: network_plugin/tasks/main.yml
+- name: Pause to ensure all nodes are ready
+  pause:
+    seconds: 120

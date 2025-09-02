@@ -1,12 +1,14 @@
 [Kuber_control]
-172.16.51.190 ansible_user=evil ansible_ssh_private_key_file=~/.ssh/git
-172.16.51.191 ansible_user=evil ansible_ssh_private_key_file=~/.ssh/git
+master-node-1 ansible_host=172.16.51.190 ansible_python_interpreter=/usr/bin/python3
+master-node-2 ansible_host=172.16.51.191
+master-node-3 ansible_host=172.16.51.192
+
 [Kuber_working]
-kuber_worker_2 ansible_ssh_host=172.16.1.155
-kuber_worker_3 ansible_ssh_host=172.16.1.156
-kuber_worker_1 ansible_ssh_host=172.16.1.154
-[Kuber_control:vars]
+worker-node-1 ansible_host=172.16.51.193
+worker-node-2 ansible_host=172.16.51.194
+worker-node-3 ansible_host=172.16.51.195
+
+[all:vars]
 ansible_user=evil
 ansible_ssh_private_key_file=~/.ssh/git
-[all:vars]
 ansible_python_interpreter=/usr/bin/python

@@ -1,4 +1,4 @@
 # roles/kubeadm_init/defaults/main.yml
-kubeconfig_user: root
-kubeconfig_group: root
+kubeconfig_user: evil
+kubeconfig_group: evil
 kubeconfig_home: "{{ '/root' if kubeconfig_user == 'root' else '/home/' + kubeconfig_user }}"

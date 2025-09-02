@@ -4,4 +4,4 @@
   apt:
     update_cache: yes
     lock_timeout: 600
-  tags: [apt_update_handler]
+    

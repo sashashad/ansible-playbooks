@@ -1,4 +1,9 @@
 # Role: k8s_prereqs/handlers/main.yml
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
 - name: Apply sysctl
   command: sysctl --system
-  tags: [sysctl_apply]

@@ -3,18 +3,18 @@
   apt:
     name: keepalived
     update_cache: yes
-  tags: [keepalived]
+  tags: [keepalived_config]
 
 - name: Stop keepalived for config replacement
   service:
     name: keepalived
     state: stopped
     enabled: yes
-  tags: [keepalived]
+  tags: [keepalived_config]
 
 - name: Deploy keepalived configuration from template
   template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
   notify: Restart keepalived
-  tags: [keepalived]
+  tags: [keepalived_config]

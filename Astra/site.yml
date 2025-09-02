@@ -1,21 +1,35 @@
-- hosts: all
-  remote_user: evil
-  become: true
-  become_method: sudo
-  roles:
-    - prepare_apt_sources
-    - k8s_prereqs
+# - name: Common setup on the whole cluster
+#   hosts: Kuber_control
+#   become: true
+#   roles:
+#     - prepare_apt_sources
+#     - k8s_prereqs
 #     - k8s_install
 
-# - hosts: Kuber_control
+# - name: Keepalived first on initial control node
+#   hosts: Kuber_control[0]
 #   become: true
 #   roles:
 #     - keepalived_config
-#     - kubeadm_init
-#     - cert_transfer
-#     - generate_join_commands
 
-# - hosts: Kuber_control
+- name: Initialize cluster on the first control node
+  hosts: Kuber_control[0]
+  become: true
+  roles:
+    # - kubeadm_init
+    - cert_transfer
+    - generate_join_commands
+
+# - name: Join remaining control nodes
+#   hosts: Kuber_control[1:]
 #   become: true
 #   roles:
+#     - keepalived_config
 #     - kubeadm_join_master
+
+# - name: Join worker nodes
+#   hosts: Kuber_working
+#   become: true
+#   roles:
+#     - keepalived_config
+#     - kubeadm_join_worker

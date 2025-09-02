@@ -1,7 +1,7 @@
 # roles/k8s_install/defaults/main.yml
-k8s_version: "1.23.17-astra1"
+k8s_install_version : "1.23.17-astra1"
 k8s_packages:
-  - "kubernetes-admin={{ k8s_version }}"
-  - "kubernetes-client={{ k8s_version }}"
-  - "kubernetes-master={{ k8s_version }}"
-  - "kubernetes-node={{ k8s_version }}"
+  - "kubernetes-admin={{ k8s_install_version  }}"
+  - "kubernetes-client={{ k8s_install_version  }}"
+  - "kubernetes-master={{ k8s_install_version  }}"
+  - "kubernetes-node={{ k8s_install_version  }}"
