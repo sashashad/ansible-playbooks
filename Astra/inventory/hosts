@@ -1,5 +1,5 @@
 [Kuber_control]
-master-node-1 ansible_host=172.16.51.190 ansible_python_interpreter=/usr/bin/python3
+master-node-1 ansible_host=172.16.51.190
 master-node-2 ansible_host=172.16.51.191
 master-node-3 ansible_host=172.16.51.192
 
@@ -11,4 +11,4 @@ worker-node-3 ansible_host=172.16.51.195
 [all:vars]
 ansible_user=evil
 ansible_ssh_private_key_file=~/.ssh/git
-ansible_python_interpreter=/usr/bin/python
+ansible_python_interpreter=/usr/bin/python3
