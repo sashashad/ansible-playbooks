@@ -1,4 +1,7 @@
 Astra/.venv/*
 Astra/ansible.log
+<<<<<<< HEAD
 Astra/group_vars/all/vault.yml
 .ansible/.lock
+=======
+>>>>>>> e25850f637360e325eaf492b98705d8a0ccf7db5
