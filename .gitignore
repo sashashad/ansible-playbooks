@@ -1,7 +1,4 @@
-.gitignore
-Astra/.vscode/settings.json
-Astra/.gitignore
+Astra/.vscode/*
 Astra/.venv/*
-Astra/pki/*
 Astra/ansible.log
 Astra/group_vars/all/vault.yml
