@@ -1,0 +1,26 @@
+# Role: generate_join_commands/tasks/main.yml
+- name: Generate join control-plane command
+  ansible.builtin.shell: kubeadm token create --print-join-command --certificate-key $(kubeadm init phase upload-certs --upload-certs | tail -n 1)
+  args:
+    executable: /bin/bash
+  register: join_command_control
+  tags: [join_commands]
+
+- name: Save join control-plane command to file
+  ansible.builtin.copy:
+    content: "{{ join_command_control.stdout }}"
+    dest: ./files/join_commands/join-control-command
+  delegate_to: localhost
+  tags: [join_commands]
+
+- name: Generate join worker command
+  ansible.builtin.command: kubeadm token create --print-join-command
+  register: join_command_worker
+  tags: [join_commands]
+
+- name: Save join worker command to file
+  ansible.builtin.copy:
+    content: "{{ join_command_worker.stdout }}"
+    dest: ./files/join_commands/join-command
+  delegate_to: localhost
+  tags: [join_commands]

@@ -1,24 +1,24 @@
 # Role: kubeadm_kubeadm_join_master/tasks/main.yml
 - name: Copy cert file to remote server
-  copy:
-    src: ./pki/
+  ansible.builtin.copy:
+    src: ./files/pki/
     dest: /etc/kubernetes/pki/
   tags: [kubeadm_join_master]
 
 - name: Copy etcd cert file to remote server
-  copy:
-    src: ./pki/etcd/
+  ansible.builtin.copy:
+    src: ./files/pki/etcd/
     dest: /etc/kubernetes/pki/etcd/
   tags: [kubeadm_join_master]
 
 - name: Copy the join command to server location
-  copy:
-    src: join-control-command
+  ansible.builtin.copy:
+    src: ./files/join_commands/join-control-command
     dest: /tmp/join-control-command.sh
     mode: '0777'
   tags: [kubeadm_join_master]
 
 - name: Join the node to cluster
-  command: sh /tmp/join-control-command.sh
+  ansible.builtin.command: sh /tmp/join-control-command.sh
   ignore_errors: yes
   tags: [kubeadm_join_master]

@@ -1,7 +1,7 @@
 # roles/prepare_apt_sources/handlers/main.yml
 
 - name: Update apt cache
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     lock_timeout: 600
     

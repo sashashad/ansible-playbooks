@@ -1,0 +1,1 @@
+kubeadm join 172.16.51.190:6443 --token fio62t.gstyy1n5dkrtml86 --discovery-token-ca-cert-hash sha256:2372b3499c562e06283e9aa29816a043cc961e2bb905bcff77344b8c16c4a7f8 --control-plane --certificate-key 8efb61df53295815d182c91aa75640454e60a093c936f79b799634e06b274709

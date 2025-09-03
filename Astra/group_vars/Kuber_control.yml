@@ -15,4 +15,3 @@ k8s_cert_sans:
   - 172.16.51.191
   - 172.16.51.192
 kubelet_cgroup_driver: cgroupfs
-

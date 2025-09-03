@@ -1,20 +1,20 @@
 # Role: cert_transfer/tasks/main.yml
 - name: Create local directories for certificates
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: '0755'
     recurse: yes
   loop:
-    - ./pki/
-    - ./pki/etcd
+    - .files/pki/
+    - .files/pki/etcd
   delegate_to: localhost
   tags: [cert_transfer]
 
 - name: Fetch control-plane certs
-  fetch:
+  ansible.builtin.fetch:
     src: /etc/kubernetes/pki/{{ item }}
-    dest: ./pki/
+    dest: .files/pki/
     flat: yes
   loop:
     - ca.crt
@@ -26,9 +26,9 @@
   tags: [cert_transfer]
 
 - name: Fetch etcd certs
-  fetch:
+  ansible.builtin.fetch:
     src: /etc/kubernetes/pki/etcd/{{ item }}
-    dest: ./pki/etcd/
+    dest: .files/pki/etcd/
     flat: yes
   loop:
     - ca.key

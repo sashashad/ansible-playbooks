@@ -3,7 +3,7 @@ master-node-1 ansible_host=172.16.51.190 ansible_python_interpreter=/usr/bin/pyt
 master-node-2 ansible_host=172.16.51.191
 master-node-3 ansible_host=172.16.51.192
 
-[Kuber_working]
+[Kuber_worker]
 worker-node-1 ansible_host=172.16.51.193
 worker-node-2 ansible_host=172.16.51.194
 worker-node-3 ansible_host=172.16.51.195

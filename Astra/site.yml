@@ -1,5 +1,5 @@
 - name: Common setup on the whole cluster
-  hosts: Kuber_control
+  hosts: Kuber_control, Kuber_worker
   become: true
   roles:
     - prepare_apt_sources
@@ -16,20 +16,26 @@
   hosts: Kuber_control[0]
   become: true
   roles:
-    # - kubeadm_init
+    - kubeadm_init
     - cert_transfer
-    - generate_join_commands
+    - kubeadm_generate_commands
 
-# - name: Join remaining control nodes
-#   hosts: Kuber_control[1:]
-#   become: true
-#   roles:
-#     - keepalived_config
-#     - kubeadm_join_master
+- name: Join remaining control nodes
+  hosts: Kuber_control[1:]
+  become: true
+  roles:
+    # - keepalived_config
+    - kubeadm_join_master
 
-# - name: Join worker nodes
-#   hosts: Kuber_working
-#   become: true
-#   roles:
-#     - keepalived_config
-#     - kubeadm_join_worker
+- name: Join worker nodes
+  hosts: Kuber_worker
+  become: true
+  roles:
+    - keepalived_config
+    - kubeadm_join_worker
+
+- name: Idempotent CNI setup for Astra-like hosts
+  hosts: Kuber_control, Kuber_worker
+  become: true
+  roles:
+    - network_plugin

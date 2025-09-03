@@ -1,18 +1,18 @@
 # Role: kubeadm_init/tasks/main.yml
 - name: Create kubeadm init config from template
-  template:
+  ansible.builtin.template:
     src: kubeadm-config.yaml.j2
     dest: /opt/kubeadm-config.yaml
   tags: [kubeadm_init]
 
 - name: Initialize the Kubernetes cluster using kubeadm
-  command: kubeadm init --config=/opt/kubeadm-config.yaml --ignore-preflight-errors=NumCPU
+  ansible.builtin.command: kubeadm init --config=/opt/kubeadm-config.yaml --ignore-preflight-errors=NumCPU
   register: kubeadm_init_result
   failed_when: kubeadm_init_result.rc != 0
   tags: [kubeadm_init]
 
 - name: Ensure kube config directory exists
-  file:
+  ansible.builtin.file:
     path: "{{ kubeconfig_home }}/.kube"
     state: directory
     owner: "{{ kubeconfig_user }}"
@@ -21,13 +21,13 @@
   tags: [kubeadm_init]
 
 - name: Check admin.conf presence
-  stat:
+  ansible.builtin.stat:
     path: /etc/kubernetes/admin.conf
   register: admin_conf
   tags: [kubeadm_init]
 
 - name: Copy admin kubeconfig to user
-  copy:
+  ansible.builtin.copy:
     src: /etc/kubernetes/admin.conf
     dest: "{{ kubeconfig_home }}/.kube/config"
     remote_src: yes
@@ -38,7 +38,7 @@
   tags: [kubeadm_init]
 
 - name: Ensure Python3 and pip are installed
-  apt:
+  ansible.builtin.apt:
     name:
       - python3
       - python3-pip
@@ -47,7 +47,7 @@
   tags: [kubeadm_init]
 
 - name: Ensure Kubernetes Python client is installed
-  pip:
+  ansible.builtin.pip:
     name: kubernetes
     executable: /usr/bin/pip3
   tags: [kubeadm_init]

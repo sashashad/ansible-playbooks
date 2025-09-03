@@ -1,57 +1,43 @@
 # Role: kubeadm_join_worker/tasks/main.yml
 - name: Copy the join command to server location
-  copy:
-    src: join-command
+  ansible.builtin.copy:
+    src: ./files/join_commands/join-command
     dest: /tmp/join-command.sh
     mode: '0777'
-
+  tags: [kubeadm_join_worker]
+  
 - name: Join the node to cluster
-  command: sh /tmp/join-command.sh
-
+  ansible.builtin.command: sh /tmp/join-command.sh
+  tags: [kubeadm_join_worker]
+  
 - name: Start keepalived
-  service:
+  ansible.builtin.service:
     name: keepalived
     state: started
     enabled: yes
-
+  tags: [kubeadm_join_worker]
+  
 - name: Reboot server
-  shell: "sleep 2 && reboot"
+  ansible.builtin.shell: "sleep 2 && reboot"
   async: 1
   poll: 0
   failed_when: false
   become: true
-
+  tags: [kubeadm_join_worker]
+  
 - name: Wait for server to initiate shutdown
-  wait_for:
+  ansible.builtin.wait_for:
     host: "{{ ansible_host }}"
     state: stopped
     port: 22
   delegate_to: localhost
-
+  tags: [kubeadm_join_worker]
+  
 - name: Wait for server to come back online
-  wait_for:
+  ansible.builtin.wait_for:
     host: "{{ ansible_host }}"
     state: started
     port: 22
   delegate_to: localhost
-
-- name: Ensure /opt/cni/bin exists
-  file:
-    path: /opt/cni/bin
-    state: directory
-    mode: '0755'
   tags: [kubeadm_join_worker]
-
-- name: Check if /usr/lib/cni exists
-  stat:
-    path: /usr/lib/cni
-  register: cni_lib
-  tags: [kubeadm_join_worker]
-
-- name: Copy CNI plugins if present (Astra-specific)
-  shell: "cp -r /usr/lib/cni/* /opt/cni/bin/"
-  args:
-    warn: false
-  changed_when: false
-  when: cni_lib.stat.isdir is defined and cni_lib.stat.isdir
-  tags: [kubeadm_join_worker]
+  

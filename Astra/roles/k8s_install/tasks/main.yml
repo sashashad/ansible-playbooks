@@ -1,6 +1,6 @@
 # Role: k8s_install/tasks/main.yml
 - name: Install Kubernetes packages
-  apt:
+  ansible.builtin.apt:
     name:
       - "kubernetes-admin={{ k8s_install_version }}"
       - "kubernetes-client={{ k8s_install_version }}"
@@ -10,7 +10,7 @@
   tags: [k8s_install]
 
 - name: Hold Kubernetes packages
-  dpkg_selections:
+  ansible.builtin.dpkg_selections:
     name: "{{ item }}"
     selection: hold
   loop:
@@ -21,7 +21,7 @@
   tags: [k8s_install]
 
 - name: Restart kubelet
-  service:
+  ansible.builtin.service:
     name: kubelet
     state: restarted
     enabled: yes
