@@ -1,6 +1,6 @@
 # roles/k8s_prereqs/tasks/main.yml
 - name: Install docker
-  apt:
+  ansible.builtin.apt:
     name: docker.io
     state: present
     update_cache: yes
@@ -17,14 +17,12 @@
   tags: [k8s_prereqs]
 
 - name: Disable swap (if any)
-  command: swapoff -a
+  ansible.builtin.command: swapoff -a
   when: ansible_swaptotal_mb | int > 0
   tags: [k8s_prereqs]
 
 - name: Mask all active swap units
-  shell: "systemctl list-units --type=swap --state=loaded --no-legend | awk '{print $1}' | xargs -r systemctl mask"
-  args: { warn: false }
-  changed_when: false
+  ansible.builtin.shell: "systemctl list-units --type=swap --state=loaded --no-legend | awk '{print $1}' | xargs -r systemctl mask"
   tags: [k8s_prereqs]
 
 - name: Load required kernel modules
@@ -37,7 +35,7 @@
   tags: [k8s_prereqs]
 
 - name: Ensure modules are loaded on boot
-  copy:
+  ansible.builtin.copy:
     dest: /etc/modules-load.d/k8s.conf
     content: |
       overlay
@@ -45,7 +43,7 @@
   tags: [k8s_prereqs]
 
 - name: Write Kubernetes sysctl params
-  copy:
+  ansible.builtin.copy:
     dest: /etc/sysctl.d/k8s.conf
     content: |
       net.bridge.bridge-nf-call-iptables = 1
@@ -55,14 +53,14 @@
   tags: [k8s_prereqs]
 
 - name: Install curl
-  apt:
+  ansible.builtin.apt:
     name: curl
     state: present
     update_cache: yes
   tags: [k8s_prereqs]
 
 - name: Reboot after prerequisites
-  reboot:
+  ansible.builtin.reboot:
     msg: "Reboot after k8s prereqs"
     connect_timeout: 5
     reboot_timeout: 600

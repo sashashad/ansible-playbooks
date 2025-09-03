@@ -1,4 +1,4 @@
-Astra/.vscode/*
 Astra/.venv/*
 Astra/ansible.log
 Astra/group_vars/all/vault.yml
+.ansible/.lock
