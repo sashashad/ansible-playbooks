@@ -1,16 +1,16 @@
-# - name: Common setup on the whole cluster
-#   hosts: Kuber_control
-#   become: true
-#   roles:
-#     - prepare_apt_sources
-#     - k8s_prereqs
-#     - k8s_install
+- name: Common setup on the whole cluster
+  hosts: Kuber_control
+  become: true
+  roles:
+    - prepare_apt_sources
+    - k8s_prereqs
+    - k8s_install
 
-# - name: Keepalived first on initial control node
-#   hosts: Kuber_control[0]
-#   become: true
-#   roles:
-#     - keepalived_config
+- name: Keepalived first on initial control node
+  hosts: Kuber_control[0]
+  become: true
+  roles:
+    - keepalived_config
 
 - name: Initialize cluster on the first control node
   hosts: Kuber_control[0]
