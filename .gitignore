@@ -1,3 +1,5 @@
+.gitignore
 Astra/.vscode/settings.json
 Astra/.gitignore
-.gitignore
+Astra/.venv/*
+Astra/pki/*
